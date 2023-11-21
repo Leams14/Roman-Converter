@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number to Roman Converter</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'EB Garamond', serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f9f5ec;
+        }
+
+        #converter-container {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #result {
+            font-size: 1.5em;
+            margin-top: 10px;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 1em;
+            margin-top: 10px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div id="converter-container">
+        <label for="numberInput">Roman Numerals Converter:</label>
+        <input type="number" id="numberInput" placeholder="Type your number" oninput="convertAndDisplay()">
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function convertToRoman(num) {
+            let roman = "";
+            let i;
+            const lookup = {
+                M:1000, CM:900, D:500, CD:400, C:100, XC:90, L:50, XL:40, X:10, IX:9, V:5, IV:4, I:1
+            };
+
+            for (i in lookup) {
+                while (num >= lookup[i]) {
+                    roman += i;
+                    num -= lookup[i];
+                }
+            }
+            return roman;
+        }
+
+        function convertAndDisplay() {
+            const inputElement = document.getElementById('numberInput');
+            const resultElement = document.getElementById('result');
+            const inputValue = inputElement.value.trim();
+
+            if (inputValue === "") {
+                resultElement.textContent = "";
+                return;
+            }
+
+            const numericValue = parseInt(inputValue);
+
+            if (isNaN(numericValue) || numericValue <= 0 || numericValue > 9999) {
+                resultElement.textContent = "Please enter a valid number between 1 and 9999.";
+            } else {
+                const romanValue = convertToRoman(numericValue);
+                resultElement.textContent = `Conversion to Roman Numeral: ${romanValue}`;
+            }
+        }
+    </script>
+</body>
+</html>
